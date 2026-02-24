@@ -8,7 +8,7 @@ export default function Navbar() {
     const isDashboard = pathname.startsWith("/dashboard");
 
     return (
-        <nav className="glass-nav flex justify-between items-center px-6 md:px-12 py-3 whitespace-nowrap">
+        <nav className="glass-nav flex justify-between items-center px-6 py-3 whitespace-nowrap">
             <Link href="/" className="flex items-center gap-3 shrink-0">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export default function Navbar() {
                     <>
                         <Link href="/dashboard" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-semibold text-sm md:text-base">Files</Link>
                         <Link href="/dashboard/upload" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-semibold text-sm md:text-base">Upload</Link>
-                        <Link href="/" className="bg-red-50 text-red-600 hover:bg-red-100 px-5 py-2 rounded-lg font-bold text-sm transition-all border border-red-100 shadow-sm">Logout</Link>
+                        <Link href="/" className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all shadow-md active:scale-95">Logout</Link>
                     </>
                 )}
             </div>

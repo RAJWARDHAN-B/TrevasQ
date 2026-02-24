@@ -26,9 +26,9 @@ export default function DashboardPage() {
     ]);
 
     return (
-        <main className="max-w-7xl mx-auto px-6 grid lg:grid-cols-3 gap-12">
+        <main className="max-w-7xl mx-auto px-6 grid lg:grid-cols-3 gap-20 py-10">
             {/* Sidebar / Status */}
-            <div className="lg:col-span-1 space-y-10">
+            <div className="lg:col-span-1 space-y-20">
                 <div className="card shadow-xl !p-10 border-slate-200">
                     <h3 className="text-2xl mb-8 font-bold text-slate-800">Security Overview</h3>
                     <div className="space-y-6">
@@ -59,20 +59,20 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                <div className="card shadow-md !p-10 mt-12" style={{ backgroundColor: '#064e3b', color: 'white', border: 'none' }}>
+                <div className="card shadow-md !p-10" style={{ backgroundColor: '#064e3b', color: 'white', border: 'none' }}>
                     <h3 className="text-2xl mb-4 text-white font-bold">Pro Tip</h3>
-                    <p className="text-base opacity-90 leading-relaxed">
+                    <p className="text-base opacity-95 leading-relaxed">
                         Always verify the URL matches <code className="bg-emerald-800 px-2 py-1 rounded text-white font-mono">veritasq.io</code> before entering credentials or uploading sensitive data.
                     </p>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-20">
                 <div className="card shadow-xl !p-10 border-slate-200">
                     <div className="flex justify-between items-center mb-10">
                         <h3 className="text-3xl font-bold text-slate-800">Secure Files</h3>
-                        <Link href="/dashboard/upload" className="btn-primary px-8 py-3 text-base shadow-md hover:shadow-lg transition-all">
+                        <Link href="/dashboard/upload" className="btn-primary px-8 py-3 text-base shadow-md hover:shadow-lg transition-all active:scale-95">
                             + Upload File
                         </Link>
                     </div>
