@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VeritasQ | Secure Data Protection Platform
 
-## Getting Started
+VeritasQ is a security-first data management platform designed to provide military-grade encryption and trust-building UI/UX.
 
-First, run the development server:
+## 🚀 Built With
+- **Frontend**: Next.js 15 (App Router), React 19
+- **Styling**: Vanilla CSS + Tailwind CSS (configured for modern @theme)
+- **Typography**: Crimson Pro (Headings) & Inter (UI)
+- **Icons**: Lucide-inspired SVG components
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Features
+- **Modern Landing Page**: High-trust messaging with a floating glassmorphism navbar.
+- **Secure Login + MFA**: Multi-step verification process with automated input sanitization.
+- **Security Dashboard**: 
+  - Real-time Security status indicator.
+  - Secure File List with status tracking.
+  - Security Audit Log table.
+- **Secure File Upload**:
+  - Drag-and-drop interface.
+  - Simulated local AES-256 encryption.
+  - Progress-driven feedback.
+- **RBAC**: UI-level Role Based Access Control integration.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+3. **Access the Application**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Security Implementation Details
+- **Input Sanitization**: Located in `lib/security.ts`, handles XSS and script injection prevention.
+- **Secure Token Handling**: Uses `sessionStorage` for token persistence to ensure session-only lifetime.
+- **Mock Secure API**: Demonstrates token-based authentication headers and secure data fetching.
+- **Client-Side Encryption Logic**: Located in `app/dashboard/upload/page.tsx`, simulates the local encryption step before data ingestion.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 Documentation
+See [DESIGN_NOTE.md](./DESIGN_NOTE.md) for a detailed explanation of the security-first design philosophy.
