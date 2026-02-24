@@ -3,34 +3,58 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import { sanitizeInput, secureFetch } from "@/lib/security";
+import { sanitizeInput, secureFetch, LoginSchema } from "@/lib/security";
 
 export default function LoginPage() {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
         setLoading(true);
 
-        // Sanitize email before use
-        const cleanEmail = sanitizeInput(email);
-        console.log("Processing login for:", cleanEmail);
+        try {
+            // 1. Zod Validation
+            const validation = LoginSchema.safeParse({ email, password });
+            if (!validation.success) {
+                setError(validation.error.issues[0].message);
+                setLoading(false);
+                return;
+            }
 
-        // Mock Secure API Call
-        const res = await secureFetch('/api/login', { method: 'POST' });
-        const data = (await res.json()) as any;
+            // 2. Sanitize email before use (Security Defense-in-depth)
+            const cleanEmail = sanitizeInput(email);
+            console.log("Processing login for:", cleanEmail);
 
-        // Secure Session Storage
-        sessionStorage.setItem('vsq_token', data.token);
-        localStorage.setItem('vsq_user', JSON.stringify(data.user));
+            // 3. Mock Secure API Call
+            const res = await secureFetch('/api/login', {
+                method: 'POST',
+                body: JSON.stringify({ email: cleanEmail, password })
+            });
 
-        setTimeout(() => {
+            const data = (await res.json()) as any;
+
+            if (!res.ok) {
+                setError(data.error || "Authentication failed. Please check your credentials.");
+                setLoading(false);
+                return;
+            }
+
+            // 4. Secure Session Storage
+            sessionStorage.setItem('vsq_token', data.token);
+            localStorage.setItem('vsq_user', JSON.stringify(data.user));
+
             setStep(2);
+        } catch (err: any) {
+            setError(err.message || "A secure connection could not be established.");
+        } finally {
             setLoading(false);
-        }, 800);
+        }
     };
 
     const handleMFA = (e: React.FormEvent) => {
@@ -52,6 +76,13 @@ export default function LoginPage() {
                     <p className="text-slate-500">Sign in to your VeritasQ vault</p>
                 </div>
 
+                {error && (
+                    <div className="bg-red-50 text-red-700 p-3 rounded-lg text-sm mb-6 border border-red-100 flex gap-2 items-center animate-shake">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        {error}
+                    </div>
+                )}
+
                 {step === 1 ? (
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div>
@@ -67,7 +98,14 @@ export default function LoginPage() {
                         </div>
                         <div>
                             <label className="block text-sm font-semibold mb-2">Password</label>
-                            <input type="password" required className="input-field" placeholder="••••••••" />
+                            <input
+                                type="password"
+                                required
+                                className="input-field"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
                         <button disabled={loading} className="btn-primary w-full">
                             {loading ? "Decrypting..." : "Continue"}
@@ -126,6 +164,15 @@ export default function LoginPage() {
         .font-bold { font-weight: 700; }
         .pt-4 { padding-top: 1rem; }
         .pt-2 { padding-top: 0.5rem; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .text-red-700 { color: #b91c1c; }
+        .border-red-100 { border-color: #fee2e2; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
       `}</style>
         </main>
     );

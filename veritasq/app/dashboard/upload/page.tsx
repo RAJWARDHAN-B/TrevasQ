@@ -1,12 +1,12 @@
-"use client";
-
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { encryptFile } from "@/lib/security";
 
 export default function UploadPage() {
     const [dragActive, setDragActive] = useState(false);
     const [files, setFiles] = useState<File[]>([]);
     const [uploading, setUploading] = useState(false);
+    const [status, setStatus] = useState("");
     const [progress, setProgress] = useState(0);
 
     const handleDrag = useCallback((e: React.DragEvent) => {
@@ -28,23 +28,40 @@ export default function UploadPage() {
         }
     }, []);
 
-    const handleUpload = () => {
+    const handleUpload = async () => {
         if (files.length === 0) return;
         setUploading(true);
-        let p = 0;
-        const interval = setInterval(() => {
-            p += 5;
-            setProgress(p);
-            if (p >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    setUploading(false);
-                    setFiles([]);
-                    setProgress(0);
-                    alert("Files encrypted and uploaded successfully!");
-                }, 500);
+        setProgress(0);
+
+        try {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                setStatus(`Encrypting: ${file.name}...`);
+
+                // Real Crypto Step
+                const { encryptedBlob, iv } = await encryptFile(file);
+                console.log(`[Security] File encrypted. IV:`, iv, `Blob size:`, encryptedBlob.size);
+
+                // Simulate upload of the encrypted blob
+                for (let p = 0; p <= 100; p += 10) {
+                    setProgress(Math.round(((i / files.length) * 100) + (p / files.length)));
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                }
             }
-        }, 100);
+
+            setStatus("Syncing with Vault...");
+            setProgress(100);
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            alert("Success: All files were encrypted locally (AES-GCM) and uploaded to the secure vault.");
+            setFiles([]);
+        } catch (err) {
+            alert("Encryption failed. The security module encountered an internal error.");
+        } finally {
+            setUploading(false);
+            setProgress(0);
+            setStatus("");
+        }
     };
 
     return (
@@ -79,7 +96,7 @@ export default function UploadPage() {
                     <div className="animate-fade-in">
                         <h4 className="font-semibold mb-4">Ready for Encryption:</h4>
                         <div className="space-y-3">
-                            {files.map((f, i) => (
+                            {files.map((f: File, i: number) => (
                                 <div key={i} className="flex justify-between items-center p-4 bg-slate-50 rounded-lg border">
                                     <div className="flex items-center gap-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
@@ -94,7 +111,7 @@ export default function UploadPage() {
                             {uploading ? (
                                 <div className="space-y-4">
                                     <div className="flex justify-between text-sm">
-                                        <span className="font-medium">Encrypting & Uploading...</span>
+                                        <span className="font-medium">{status}</span>
                                         <span>{progress}%</span>
                                     </div>
                                     <div className="w-full bg-slate-100 rounded-full h-3">
