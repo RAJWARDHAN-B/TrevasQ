@@ -8,54 +8,39 @@ export default function Navbar() {
     const isDashboard = pathname.startsWith("/dashboard");
 
     return (
-        <nav className="glass-nav">
-            <Link href="/" className="flex items-center gap-2">
+        <nav className="glass-nav flex justify-between items-center px-6 md:px-12 py-3 whitespace-nowrap">
+            <Link href="/" className="flex items-center gap-3 shrink-0">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width="28"
+                    height="28"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="var(--primary)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    strokeWidth="2.5"
                 >
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
-                <span style={{ fontFamily: "var(--font-crimson-pro)", fontWeight: 700, fontSize: "1.5rem" }}>
+                <span className="text-xl md:text-2xl font-bold font-[var(--font-crimson-pro)] text-slate-900">
                     VeritasQ
                 </span>
             </Link>
 
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-6 md:gap-10">
                 {!isDashboard ? (
                     <>
-                        <Link href="#features" className="hover:text-[var(--primary)] transition-colors">Features</Link>
-                        <Link href="#trust" className="hover:text-[var(--primary)] transition-colors">Trust</Link>
-                        <Link href="/login" className="btn-primary">Dashboard</Link>
+                        <Link href="#features" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-medium hidden sm:block">Features</Link>
+                        <Link href="#trust" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-medium hidden sm:block">Trust</Link>
+                        <Link href="/login" className="btn-primary hover:shadow-lg transition-all px-8 py-2">Dashboard</Link>
                     </>
                 ) : (
                     <>
-                        <Link href="/dashboard" className="hover:text-[var(--primary)] transition-colors">Files</Link>
-                        <Link href="/dashboard/upload" className="hover:text-[var(--primary)] transition-colors">Upload</Link>
-                        <Link href="/" className="btn-primary" style={{ backgroundColor: "#64748b" }}>Logout</Link>
+                        <Link href="/dashboard" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-semibold text-sm md:text-base">Files</Link>
+                        <Link href="/dashboard/upload" className="text-slate-600 hover:text-[var(--primary)] transition-colors font-semibold text-sm md:text-base">Upload</Link>
+                        <Link href="/" className="bg-red-50 text-red-600 hover:bg-red-100 px-5 py-2 rounded-lg font-bold text-sm transition-all border border-red-100 shadow-sm">Logout</Link>
                     </>
                 )}
             </div>
-
-            <style jsx>{`
-        nav {
-          font-weight: 500;
-        }
-        .flex { display: flex; }
-        .items-center { align-items: center; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-8 { gap: 2rem; }
-        @media (max-width: 768px) {
-          .gap-8 { display: none; }
-        }
-      `}</style>
         </nav>
     );
 }

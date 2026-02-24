@@ -26,53 +26,53 @@ export default function DashboardPage() {
     ]);
 
     return (
-        <main className="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8">
+        <main className="max-w-7xl mx-auto px-6 grid lg:grid-cols-3 gap-12">
             {/* Sidebar / Status */}
-            <div className="lg:col-span-1 space-y-6">
-                <div className="card">
-                    <h3 className="text-xl mb-4">Security Overview</h3>
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <span className="text-slate-500">Global Protection</span>
+            <div className="lg:col-span-1 space-y-10">
+                <div className="card shadow-xl !p-10 border-slate-200">
+                    <h3 className="text-2xl mb-8 font-bold text-slate-800">Security Overview</h3>
+                    <div className="space-y-6">
+                        <div className="flex justify-between items-center bg-slate-50 p-4 rounded-xl">
+                            <span className="text-slate-500 font-medium">Global Protection</span>
                             <span className="badge badge-success">Active</span>
                         </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-slate-500">Vault Status</span>
+                        <div className="flex justify-between items-center bg-slate-50 p-4 rounded-xl">
+                            <span className="text-slate-500 font-medium">Vault Status</span>
                             <span className="text-[var(--primary)] font-bold">Locked (AES-256)</span>
                         </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-slate-500">MFA Status</span>
+                        <div className="flex justify-between items-center bg-slate-50 p-4 rounded-xl">
+                            <span className="text-slate-500 font-medium">MFA Status</span>
                             <span className="badge badge-success">Verified</span>
                         </div>
                         {isAdmin && (
-                            <div className="flex justify-between items-center bg-purple-50 p-2 rounded border border-purple-100 mt-2">
-                                <span className="text-purple-700 text-xs font-bold uppercase">Admin Access</span>
-                                <span className="text-[10px] text-purple-600">Full Permissions</span>
+                            <div className="flex justify-between items-center bg-purple-50 p-4 rounded-xl border border-purple-100">
+                                <span className="text-purple-700 text-xs font-bold uppercase tracking-wider">Admin Access</span>
+                                <span className="text-[10px] text-purple-600 bg-white px-2 py-1 rounded shadow-sm">Full Permissions</span>
                             </div>
                         )}
-                        <div className="pt-4 border-t">
-                            <div className="w-full bg-slate-100 rounded-full h-2 mb-2">
-                                <div className="bg-[var(--primary)] h-2 rounded-full" style={{ width: '92%' }}></div>
+                        <div className="pt-8 border-t border-slate-100">
+                            <div className="w-full bg-slate-100 rounded-full h-3 mb-3">
+                                <div className="bg-[var(--primary)] h-3 rounded-full shadow-inner" style={{ width: '92%' }}></div>
                             </div>
-                            <p className="text-xs text-slate-500">Vault Security Score: 92%</p>
+                            <p className="text-sm text-slate-500 font-medium">Vault Security Score: 92%</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="card bg-emerald-900 text-white">
-                    <h3 className="text-lg mb-2">Pro Tip</h3>
-                    <p className="text-sm opacity-80 leading-relaxed">
-                        Always verify the URL matches <code className="bg-emerald-800 px-1 rounded">veritasq.io</code> before entering credentials.
+                <div className="card shadow-md !p-10 mt-12" style={{ backgroundColor: '#064e3b', color: 'white', border: 'none' }}>
+                    <h3 className="text-2xl mb-4 text-white font-bold">Pro Tip</h3>
+                    <p className="text-base opacity-90 leading-relaxed">
+                        Always verify the URL matches <code className="bg-emerald-800 px-2 py-1 rounded text-white font-mono">veritasq.io</code> before entering credentials or uploading sensitive data.
                     </p>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-                <div className="card">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-2xl">Secure Files</h3>
-                        <Link href="/dashboard/upload" className="btn-primary text-sm">
+            <div className="lg:col-span-2 space-y-12">
+                <div className="card shadow-xl !p-10 border-slate-200">
+                    <div className="flex justify-between items-center mb-10">
+                        <h3 className="text-3xl font-bold text-slate-800">Secure Files</h3>
+                        <Link href="/dashboard/upload" className="btn-primary px-8 py-3 text-base shadow-md hover:shadow-lg transition-all">
                             + Upload File
                         </Link>
                     </div>
@@ -80,24 +80,26 @@ export default function DashboardPage() {
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="border-b text-slate-400 text-sm">
-                                    <th className="pb-4 font-normal">Name</th>
-                                    <th className="pb-4 font-normal">Size</th>
-                                    <th className="pb-4 font-normal text-right">Added</th>
+                                <tr className="border-b border-slate-100 text-slate-400 text-sm">
+                                    <th className="pb-6 font-semibold uppercase tracking-wider">Name</th>
+                                    <th className="pb-6 font-semibold uppercase tracking-wider">Size</th>
+                                    <th className="pb-6 font-semibold uppercase tracking-wider text-right">Added</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y">
+                            <tbody className="divide-y divide-slate-50">
                                 {files.map((file, i) => (
                                     <tr key={i} className="group hover:bg-slate-50 transition-colors">
-                                        <td className="py-4">
-                                            <div className="flex items-center gap-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                                                <span className="font-medium">{file.name}</span>
-                                                {file.status === "Scanning" && <span className="badge badge-warning text-[10px]">Scanning</span>}
+                                        <td className="py-6">
+                                            <div className="flex items-center gap-4">
+                                                <div className="p-2 bg-emerald-50 rounded-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                                </div>
+                                                <span className="font-semibold text-slate-700">{file.name}</span>
+                                                {file.status === "Scanning" && <span className="badge badge-warning text-[10px] animate-pulse">Scanning</span>}
                                             </div>
                                         </td>
-                                        <td className="py-4 text-slate-500">{file.size}</td>
-                                        <td className="py-4 text-right text-slate-400 text-sm">{file.date}</td>
+                                        <td className="py-6 text-slate-500 font-medium">{file.size}</td>
+                                        <td className="py-6 text-right text-slate-400 font-medium">{file.date}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -105,19 +107,19 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                <div className="card">
-                    <h3 className="text-xl mb-6">Security Audit Log</h3>
-                    <div className="space-y-4">
+                <div className="card shadow-xl !p-10 border-slate-200">
+                    <h3 className="text-2xl mb-10 font-bold text-slate-800">Security Audit Log</h3>
+                    <div className="space-y-6">
                         {auditLogs.map((log, i) => (
-                            <div key={i} className="flex justify-between items-center p-3 rounded-lg hover:bg-slate-50">
-                                <div className="flex gap-4 items-center">
-                                    <div className={`w-2 h-2 rounded-full ${log.action.includes('Success') ? 'bg-emerald-400' : 'bg-slate-300'}`}></div>
+                            <div key={i} className="flex justify-between items-center p-5 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
+                                <div className="flex gap-6 items-center">
+                                    <div className={`w-3 h-3 rounded-full shadow-sm ${log.action.includes('Success') ? 'bg-emerald-400 scale-110' : 'bg-slate-300'}`}></div>
                                     <div>
-                                        <p className="text-sm font-medium">{log.action}</p>
-                                        <p className="text-xs text-slate-400">IP: {log.ip}</p>
+                                        <p className="text-base font-bold text-slate-700">{log.action}</p>
+                                        <p className="text-sm text-slate-400 font-medium mt-1">IP: {log.ip}</p>
                                     </div>
                                 </div>
-                                <span className="text-xs text-slate-400">{log.time}</span>
+                                <span className="text-sm text-slate-400 font-semibold bg-slate-50 px-3 py-1 rounded-full">{log.time}</span>
                             </div>
                         ))}
                     </div>

@@ -8,7 +8,7 @@ export default function DashboardLayout({
     return (
         <div className="min-h-screen bg-slate-50">
             <Navbar />
-            <div className="pt-24 pb-12">
+            <div style={{ paddingTop: '200px', paddingBottom: '3rem' }}>
                 {children}
             </div>
         </div>
